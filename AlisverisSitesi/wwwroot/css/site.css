@@ -11,7 +11,12 @@ a.navbar-brand {
 a {
   color: #0366d6;
 }
-
+.bg {
+    text-align: center !important;
+    height: 100%;
+    width: 100;
+    background-image: url("https://st2.depositphotos.com/2511477/6362/v/950/depositphotos_63624603-stock-illustration-background-with-colorful-shopping-icons.jpg")
+}
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
@@ -70,8 +75,8 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 .resim1{
-    width: 10%;
-    height: 10%;
+    width: 25%;
+    height: 25%;
 }
 .resim2{
     width: 10%;

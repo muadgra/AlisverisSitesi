@@ -10,7 +10,8 @@ namespace AlisverisSitesi.Models
     {
         [Key]
         public int KategoriId { get; set; }
-        private string KategoriAd { get; set; }
+        [Required]
+        public string KategoriAd { get; set; }
         public ICollection<Urun> Urunler { get; set; }
     }
 }

@@ -4,14 +4,16 @@ using AlisverisSitesi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlisverisSitesi.Migrations
 {
     [DbContext(typeof(AlisverisDb))]
-    partial class AlisverisDbModelSnapshot : ModelSnapshot
+    [Migration("20201202104116_altinciGuncelleme")]
+    partial class altinciGuncelleme
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,38 +63,11 @@ namespace AlisverisSitesi.Migrations
                     b.Property<string>("KullaniciSifresi")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Sepet")
-                        .HasColumnType("int");
-
                     b.HasKey("KullaniciID");
-
-                    b.HasIndex("Sepet")
-                        .IsUnique()
-                        .HasFilter("[Sepet] IS NOT NULL");
 
                     b.ToTable("Kullanicilar");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Kullanici");
-                });
-
-            modelBuilder.Entity("AlisverisSitesi.Models.Sepet", b =>
-                {
-                    b.Property<int>("SepetID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int?>("Kullanici")
-                        .HasColumnType("int");
-
-                    b.Property<int>("KullaniciID")
-                        .HasColumnType("int");
-
-                    b.HasKey("SepetID");
-
-                    b.HasIndex("Kullanici");
-
-                    b.ToTable("Sepet");
                 });
 
             modelBuilder.Entity("AlisverisSitesi.Models.Siparis", b =>
@@ -102,15 +77,13 @@ namespace AlisverisSitesi.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("SepetID")
+                    b.Property<int>("KullaniciID")
                         .HasColumnType("int");
 
                     b.Property<int>("UrunID")
                         .HasColumnType("int");
 
                     b.HasKey("SiparisID");
-
-                    b.HasIndex("SepetID");
 
                     b.ToTable("Siparisler");
                 });
@@ -157,33 +130,6 @@ namespace AlisverisSitesi.Migrations
                     b.HasDiscriminator().HasValue("Admin");
                 });
 
-            modelBuilder.Entity("AlisverisSitesi.Models.Kullanici", b =>
-                {
-                    b.HasOne("AlisverisSitesi.Models.Sepet", "Sepeti")
-                        .WithOne()
-                        .HasForeignKey("AlisverisSitesi.Models.Kullanici", "Sepet");
-
-                    b.Navigation("Sepeti");
-                });
-
-            modelBuilder.Entity("AlisverisSitesi.Models.Sepet", b =>
-                {
-                    b.HasOne("AlisverisSitesi.Models.Kullanici", "Kullanicisi")
-                        .WithMany()
-                        .HasForeignKey("Kullanici");
-
-                    b.Navigation("Kullanicisi");
-                });
-
-            modelBuilder.Entity("AlisverisSitesi.Models.Siparis", b =>
-                {
-                    b.HasOne("AlisverisSitesi.Models.Sepet", null)
-                        .WithMany("Siparisler")
-                        .HasForeignKey("SepetID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("AlisverisSitesi.Models.Urun", b =>
                 {
                     b.HasOne("AlisverisSitesi.Models.Kategori", "KategoriAdi")
@@ -196,11 +142,6 @@ namespace AlisverisSitesi.Migrations
             modelBuilder.Entity("AlisverisSitesi.Models.Kategori", b =>
                 {
                     b.Navigation("Urunler");
-                });
-
-            modelBuilder.Entity("AlisverisSitesi.Models.Sepet", b =>
-                {
-                    b.Navigation("Siparisler");
                 });
 #pragma warning restore 612, 618
         }

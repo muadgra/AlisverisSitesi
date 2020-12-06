@@ -1,0 +1,23 @@
+﻿@model IEnumerable<AlisverisSitesi.Models.Kategori>
+<link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+<h1>Kategoriler</h1>
+<body id="page-top" style="background-color: #20c997">
+<div id="portfolio">
+    <div class="container-fluid p-0">
+        <div class="row no-gutters">
+            @foreach (var kategori in Model)
+            {
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="~/lib/bootstrap/downloaded/css/styles.css">
+                    <img class="img-fluid" src="~/lib/bootstrap/downloaded/assets/img/portfolio/fullsize/1.jpg" alt="">
+                    <div class="portfolio-box-caption">
+                        <div class="project-category text-white-50">Category</div>
+                        <div class="project-name">@kategori.KategoriAd</div>
+                    </div>
+                </a>
+            </div>
+            }        
+        </div>
+    </div>
+</div>
+    </body>

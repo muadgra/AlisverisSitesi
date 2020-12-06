@@ -35,7 +35,9 @@ namespace AlisverisSitesi.Controllers
         }
         public IActionResult Onerilenler()
         {
-            return View();
+            var db = new AlisverisDb();
+            var Urunler = db.Urunler.ToList();
+            return View(Urunler);
         }
 
     }

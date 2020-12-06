@@ -1,11 +1,18 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<div>
-    <img class ="resim1" src="https://www.greyder.com/Content/media/ProductImg/original/0k1sa14191-13188-14191-gunluk-erkek-ayakkabi-siyah-637372295591606993.jpg" alt = "Ayakkabi" />
-</div>
-<div>
-    <img class ="resim2"src="https://i4.hurimg.com/i/hurriyet/75/0x0/5e7ae1aa18c77317f0f519ed.jpg" alt="Bilgisayar"/>
-</div>
+﻿@model IEnumerable<AlisverisSitesi.Models.Urun>
+
+<body body id="page-top" style="background-color: #20c997">
+    <table style="height: 15%; width:75%">
+        <tr> 
+            <th>Urun Adi</th>
+            <th>Urun Fiyati</th>
+            <th>Urun Resmi</th>
+        </tr>
+        @foreach(var item in Model){
+        <tr>
+            <td>@item.UrunAd</td>
+            <td>@item.UrunFiyat</td>
+            <td><img class="resim1" src ="@item.UrunResimURL" /></td>
+        </tr>
+        }
+    </table>
+</body>

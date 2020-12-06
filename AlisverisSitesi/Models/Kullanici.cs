@@ -16,7 +16,7 @@ namespace AlisverisSitesi.Models
         public string Email { get; set; }
         public DateTime DogumTarihi { get; set; }
         public string Adres { get; set; }
-        [ForeignKey("Siparis")]
-        ICollection<Siparis> Siparisler { get; set; }
+        [ForeignKey("Sepet")]
+        public Sepet Sepeti { get; set; }
     }
 }
