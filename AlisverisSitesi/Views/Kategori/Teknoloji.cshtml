@@ -1,0 +1,11 @@
+﻿@model IEnumerable<AlisverisSitesi.Models.Urun>
+<link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+<body id="page-top" style="background-color: #20c997">
+    <h1>Ayakkabi</h1>
+    @foreach (var teknolojik in Model)
+    {
+        <div class="col-lg-4 col-sm-6">
+            <div class="project-name">@teknolojik.UrunAd</div>
+        </div>
+    }
+</body>

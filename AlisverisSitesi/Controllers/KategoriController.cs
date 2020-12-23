@@ -163,5 +163,23 @@ namespace AlisverisSitesi.Controllers
                               select a;
             return View(Ayakkabilar);
         }
+        public IActionResult Teknoloji()
+        {
+            var db = new AlisverisDb();
+            //var KategorilerListesi = db.Kategoriler.ToList();
+            var Teknolojik = from a in db.Urunler
+                              where a.KategoriID == 2
+                              select a;
+            return View(Teknolojik);
+        }
+        public IActionResult Spor()
+        {
+            var db = new AlisverisDb();
+            //var KategorilerListesi = db.Kategoriler.ToList();
+            var Spor = from a in db.Urunler
+                              where a.KategoriID == 3
+                              select a;
+            return View(Spor);
+        }
     }
 }
