@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AlisverisSitesi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,6 +27,8 @@ namespace AlisverisSitesi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSession();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             /*
             var connection = @"server =.; database=BookStore;trusted_connection=true;";
             services.AddDbContext<AlisverisDb>(options => options.UseSqlServer(connection));*/
@@ -48,7 +51,7 @@ namespace AlisverisSitesi
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseSession();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

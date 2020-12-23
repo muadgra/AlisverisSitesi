@@ -20,6 +20,7 @@ namespace AlisverisSitesi.Controllers
 
         public IActionResult Index()
         {
+            HttpContext.Response.Cookies.Append("dil", "tr");
             return View();
         }
 

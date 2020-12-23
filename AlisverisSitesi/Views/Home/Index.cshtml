@@ -1,11 +1,23 @@
 ﻿@{
+    @using Microsoft.AspNetCore.Http
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
     ViewData["Title"] = "Home Page";
     
+    var dil = HttpContextAccessor.HttpContext.Request.Cookies["dil"].ToString();
     <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
 }
-<body id="page-top" style="        background-color: #20c997">
-    <!-- Navigation-->
-    
+<body id="page-top" style="background-color: #20c997">
+    @{ 
+        if (!string.IsNullOrEmpty(HttpContextAccessor.HttpContext.Request.Cookies["dil"].ToString()))
+        {
+            <div>TR Dili</div>
+        }
+        else
+        {
+            <div>EN Dili</div>
+        }
+    }
+
     <!-- Masthead-->
     <header class="masthead">
         <div class="container h-100">

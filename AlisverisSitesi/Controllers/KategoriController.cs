@@ -154,5 +154,14 @@ namespace AlisverisSitesi.Controllers
             var KategorilerListesi = db.Kategoriler.ToList();
             return View(KategorilerListesi);
         }
+        public IActionResult Ayakkabi()
+        {
+            var db = new AlisverisDb();
+            //var KategorilerListesi = db.Kategoriler.ToList();
+            var Ayakkabilar = from a in db.Urunler
+                              where a.KategoriID == 1
+                              select a;
+            return View(Ayakkabilar);
+        }
     }
 }
