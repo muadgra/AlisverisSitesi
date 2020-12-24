@@ -2,10 +2,38 @@
 <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
 <body id="page-top" style="background-color: #20c997">
     <h1>Ayakkabi</h1>
-    @foreach (var ayakkabi in Model)
-    {
-        <div class="col-lg-4 col-sm-6">
-            <div class="project-name">@ayakkabi.UrunAd</div>
-        </div>
-    }
+    
+    <table>
+        <tr>
+            <th>Urun Adi</th>
+            <th>Urun Resmi</th>
+            <th>Urun Fiyati</th>
+        </tr>
+        @foreach (var ayakkabi in Model)
+        {
+        <tr>
+            <td>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="project-name">@ayakkabi.UrunAd</div>
+                </div>
+            </td>
+            <td>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="project-name"><img src=@ayakkabi.UrunResimURL height="175" width="175"></div>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <div class="project-name">@ayakkabi.UrunFiyat</div>
+                </div>
+            </td>
+            <td>
+                <form asp-action="Ayakkabi">
+                    <input type="submit" value="Sepete Ekle"/>
+                </form>
+            </td>
+        </tr>
+
+        }
+    </table>
 </body>

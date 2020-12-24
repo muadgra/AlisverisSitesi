@@ -63,7 +63,18 @@ namespace AlisverisSitesi.Controllers
             }
             return View(kategori);
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SepeteEkle([Bind("UrunID,KategoriID,Kategori,StokMiktari,UrunAd,UrunResimURL,UrunFiyat")] Urun urun)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(urun);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(urun);
+        }
         // GET: Kategori/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

@@ -24,7 +24,7 @@ namespace AlisverisSitesi.Controllers
         // GET: Kullanici
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Kullanicilar.ToListAsync());
+            return View(/*await _context.Kullanicilar.ToListAsync()*/);
         }
 
         // GET: Kullanici/Details/5
@@ -56,7 +56,7 @@ namespace AlisverisSitesi.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("KullaniciID,KullaniciAdi,KullaniciSifresi,Email,DogumTarihi,Adres,AdminMi")] Kullanici kullanici)
+        public async Task<IActionResult> UyeOl([Bind("KullaniciID,KullaniciAdi,KullaniciSifresi,Email,DogumTarihi,Adres")] Kullanici kullanici)
         {
             if (ModelState.IsValid)
             {
