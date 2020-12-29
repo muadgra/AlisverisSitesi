@@ -6,45 +6,53 @@
 <head>
     <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
 </head>
-<body id="page-top" style="background-color: #20c997">
-<h1>Create</h1>
+<body id="page-top">
+    <header class="masthead">
 
-<h4>Personel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="UyeOl">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="KullaniciAdi" class="control-label"></label>
-                <input asp-for="KullaniciAdi" class="form-control" />
-                <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="KullaniciSifresi" class="control-label"></label>
-                <input asp-for="KullaniciSifresi" class="form-control" />
-                <span asp-validation-for="KullaniciSifresi" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DogumTarihi" class="control-label"></label>
-                <input asp-for="DogumTarihi" class="form-control" />
-                <span asp-validation-for="DogumTarihi" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Adres" class="control-label"></label>
-                <input asp-for="Adres" class="form-control" />
-                <span asp-validation-for="Adres" class="text-danger"></span>
-            </div>
+        <h2 class=" text-white text-center">Sizi De Üye Yapalım</h2>
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+
+        <hr />
+
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="UyeOl">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="KullaniciAdi" class="control-label text-white"></label>
+                        <input asp-for="KullaniciAdi" class="form-control" />
+                        <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="KullaniciSifresi" class="control-label text-white"></label>
+                        <input asp-for="KullaniciSifresi" class="form-control" />
+                        <span asp-validation-for="KullaniciSifresi" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label text-white"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DogumTarihi" class="control-label text-white"></label>
+                        <input asp-for="DogumTarihi" class="form-control" />
+                        <span asp-validation-for="DogumTarihi" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Adres" class="control-label text-white"></label>
+                        <input asp-for="Adres" class="form-control" />
+                        <span asp-validation-for="Adres" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
-</div>
+        </div>
+    </header>
 </body>
+
+<footer class="bg-dark py-5">
+    <div class="container"><div class="small text-center text-muted">Copyright © 2020 - Burak Çağan Doğru - Mertcan Gökmen</div></div>
+</footer>
