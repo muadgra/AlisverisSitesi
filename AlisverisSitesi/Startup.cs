@@ -33,21 +33,21 @@ namespace AlisverisSitesi
                 config.Cookie.Name = "Grandmas.Cookie";
             });
 
-            services.AddMvc()
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+            services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat
+                 .Suffix).AddDataAnnotationsLocalization();
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 var supportedCultures = new[]
                 {
-                    new CultureInfo("en-US"),
-                    new CultureInfo("tr")
-                };
-                options.DefaultRequestCulture = new RequestCulture(culture: "tr");
+            new CultureInfo("tr"),
+            new CultureInfo("en-US"),
+
+        };
+                options.DefaultRequestCulture = new RequestCulture(culture: "tr", uiCulture: "tr");
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
-            }
-                
-            );
+            });
+        
             services.AddControllersWithViews();
             services.AddSession();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -74,6 +74,8 @@ namespace AlisverisSitesi
             app.UseStaticFiles();
 
             app.UseRouting();
+            var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(locOptions.Value);
             app.UseSession();
             app.UseAuthorization();
 
