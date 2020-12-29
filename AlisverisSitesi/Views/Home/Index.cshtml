@@ -1,21 +1,59 @@
-﻿@{
+﻿@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@{
     @using Microsoft.AspNetCore.Http
     @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
     ViewData["Title"] = "Home Page";
     //var dil = HttpContextAccessor.HttpContext.Request.Cookies["dil1"].ToString();
     <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+    @using Microsoft.AspNetCore.Builder
+    @using Microsoft.AspNetCore.Localization
+    @using Microsoft.Extensions.Options
+    @using Microsoft.AspNetCore.Mvc.Localization
+
 }
-<body id="page-top" style="background-color: #20c997">
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+}
+@{
+    string culture = "", uiculture = "";
+    if (Context.Request.QueryString.HasValue)
+    {
+        string url = Context.Request.QueryString.Value;
+        culture = Context.Request.Query["culture"];
+        uiculture = Context.Request.Query["ui-culture"];
+    }
+}
+<body id="page-top" style="background-color: #20c997" asp-action="Index" asp-route-culture="@culture" asp-route-ui-culture="@uiculture">
+
     <header class="masthead">
+        @{
+            if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+            {
+                <h1>
+                    Hoşgeldiniz!
+                </h1>
+            }
+            else
+            {
+                <h1>Welcome!</h1>
+                }
+            }
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
         <div class="container h-100">
             <div class="row h-100 align-items-center justify-content-center text-center">
                 <div class="col-lg-10 align-self-end">
 
                     <h1 class="text-uppercase text-white font-weight-bold">
-
                     </h1>
-                    
-                    
+
+
                     <hr class="divider my-4">
                 </div>
                 <div class="col-lg-8 align-self-baseline">

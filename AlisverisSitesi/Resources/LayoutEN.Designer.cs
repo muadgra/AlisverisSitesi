@@ -22,14 +22,14 @@ namespace AlisverisSitesi2.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class HomeText {
+    public class LayoutEN {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal HomeText() {
+        internal LayoutEN() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace AlisverisSitesi2.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AlisverisSitesi2.Resources.HomeText", typeof(HomeText).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AlisverisSitesi2.Resources.LayoutEN", typeof(LayoutEN).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace AlisverisSitesi2.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome.
+        ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Anasayfa {
             get {
@@ -79,7 +79,7 @@ namespace AlisverisSitesi2.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contact.
+        ///   Looks up a localized string similar to Contact Us.
         /// </summary>
         public static string Iletisim {
             get {
@@ -97,7 +97,7 @@ namespace AlisverisSitesi2.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recommendations.
+        ///   Looks up a localized string similar to Recommended.
         /// </summary>
         public static string Önerilenler {
             get {
@@ -111,15 +111,6 @@ namespace AlisverisSitesi2.Resources {
         public static string UyeOl {
             get {
                 return ResourceManager.GetString("UyeOl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Welcome.
-        /// </summary>
-        public static string Welcome {
-            get {
-                return ResourceManager.GetString("Welcome", resourceCulture);
             }
         }
     }

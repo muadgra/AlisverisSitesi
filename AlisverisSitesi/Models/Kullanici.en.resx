@@ -117,25 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Anasayfa" xml:space="preserve">
-    <value>Welcome</value>
+  <data name="Adresiniz:" xml:space="preserve">
+    <value>Adress:</value>
   </data>
-  <data name="Giris" xml:space="preserve">
-    <value>Login</value>
+  <data name="Doğum Tarihiniz:" xml:space="preserve">
+    <value>Date of Birth:</value>
   </data>
-  <data name="Iletisim" xml:space="preserve">
-    <value>Contact</value>
+  <data name="Emailiniz:" xml:space="preserve">
+    <value>Email:</value>
   </data>
-  <data name="Kategoriler" xml:space="preserve">
-    <value>Categories</value>
+  <data name="Kullanıcı Adınız:" xml:space="preserve">
+    <value>Your Username:</value>
   </data>
-  <data name="UyeOl" xml:space="preserve">
-    <value>Sign Up</value>
-  </data>
-  <data name="Welcome" xml:space="preserve">
-    <value>Welcome</value>
-  </data>
-  <data name="Önerilenler" xml:space="preserve">
-    <value>Recommendations</value>
+  <data name="Şifreniz:" xml:space="preserve">
+    <value>Password:</value>
   </data>
 </root>

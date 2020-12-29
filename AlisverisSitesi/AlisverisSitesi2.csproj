@@ -29,26 +29,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Resources\HomeText.Designer.cs">
+    <Compile Update="Resources\LayoutEN.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>HomeText.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\HomeTextTR.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>HomeTextTR.resx</DependentUpon>
+      <DependentUpon>LayoutEN.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\HomeText.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>HomeText.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="Resources\HomeTextTR.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>HomeTextTR.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\LayoutEN.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LayoutEN.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
