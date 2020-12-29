@@ -1,8 +1,29 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 @{
     @using Microsoft.AspNetCore.Http
+    @using Microsoft.AspNetCore.Builder
+    @using Microsoft.AspNetCore.Localization
+    @using Microsoft.Extensions.Options
+    @using Microsoft.AspNetCore.Mvc.Localization
     @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+    @inject IViewLocalizer Localizer
+    @inject IOptions<RequestLocalizationOptions> LocOptions
+}
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+}
+@{
+    string culture = "", uiculture = "";
+    if (Context.Request.QueryString.HasValue)
+    {
+        string url = Context.Request.QueryString.Value;
+        culture = Context.Request.Query["culture"];
+        uiculture = Context.Request.Query["ui-culture"];
+    }
 }
 <head>
     <meta charset="utf-8" />
@@ -12,20 +33,42 @@
     <link rel="stylesheet" href="~/lib/bootstrap/agency-bootstrap/css/styles.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body background="https://i.pinimg.com/originals/af/8d/63/af8d63a477078732b79ff9d9fc60873f.jpg">
+<body background="https://i.pinimg.com/originals/af/8d/63/af8d63a477078732b79ff9d9fc60873f.jpg" asp-route-culture="@culture" asp-route-ui-culture="@uiculture">
     <header>
         <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
             <div class="container">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                        <li class="nav-item" ><img src="~/lib/logo.png" height="45" width="45"/></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Home" asp-action="Index"><font size="3">Anasayfa</font></a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Home" asp-action="Onerilenler"><font size="3">Önerilenler</font></a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kategori" asp-action="Kategoriler"><font size="3">Kategoriler</font></a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Iletisim" asp-action="Iletisim"><font size="3">Iletisim</font></a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Home" asp-action="Giris"><font size="3">Giris</font></a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="UyeOl"><font size="3">UyeOl</font></a></li>
+
+
+
+
+                        <li class="nav-item"><label>Language:</label></li>
+                        <li class="nav-item"><select onchange="SetCulture(this.value)" asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="cultureItems"></select></li>
+                        @{ if (requestCulture.RequestCulture.UICulture.Name == "tr")
+                            {
+                                <li class="nav-item"><img src="~/lib/logo.png" height="45" width="45" /></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Home" asp-action="Index"><font size="3">Anasayfa</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Home" asp-action="Onerilenler"><font size="3">Önerilenler</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kategori" asp-action="Kategoriler"><font size="3">Kategoriler</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Iletisim" asp-action="Iletisim"><font size="3">Iletisim</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="Giris"><font size="3">Giris</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="UyeOl"><font size="3">UyeOl</font></a></li>
+                            }
+                            else
+                            {
+                                <li class="nav-item"><img src="~/lib/logo.png" height="45" width="45" /></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Home" asp-action="Index"><font size="3">Home</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Home" asp-action="Onerilenler"><font size="3">Recommended</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kategori" asp-action="Kategoriler"><font size="3">Categories</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Iletisim" asp-action="Iletisim"><font size="3">Contact Us</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="Giris"><font size="3">Login</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="UyeOl"><font size="3">Sign Up</font></a></li>
+
+                            }
+
+                        }
                     </ul>
                     <script>
                         function myFunction() {
@@ -51,3 +94,11 @@
 
     
     @RenderSection("Scripts", required: false)
+<script>
+    function SetCulture(selectedValue) {
+        alert(selectedValue);
+        var url = window.location.href.split('?')[0];
+        var culture = "?culture=" + selectedValue + "&ui-culture=" + selectedValue;
+        window.location.href = url + culture;
+    }
+</script>
