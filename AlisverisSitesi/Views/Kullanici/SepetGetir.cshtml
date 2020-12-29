@@ -1,0 +1,25 @@
+﻿@model IEnumerable<AlisverisSitesi.Models.Siparis>
+@{
+
+    ViewData["Title"] = "Home Page";
+    <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+    var db = new AlisverisDb();
+}
+<body>
+    @foreach (var item in Model)
+    {
+        var urun = from b in db.Urunler
+                   where b.UrunID == item.UrunID
+                   select b;
+        foreach(var a in urun){
+            <div class="col-lg-4 col-sm-6">
+  
+                    <div class="portfolio-box-caption">
+                        <div class="project-category text-white-50">Category</div>
+                        <div class="project-name">@a.UrunAd</div>
+                    </div>
+            
+            </div>
+        }
+    }
+</body>

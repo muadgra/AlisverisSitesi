@@ -1,23 +1,62 @@
 ﻿@model IEnumerable<AlisverisSitesi.Models.Kategori>
-<link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+@{
+    @using System.Web
+    @using Microsoft.AspNetCore.Http
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+    var dil = HttpContextAccessor.HttpContext.Request.Cookies["dil1"].ToString();
+    var yeniDil = HttpContextAccessor.HttpContext.Request.Cookies["dil3"].ToString();
+    int yeniCookie = int.Parse(yeniDil) + 1;
+    <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+}
 <h1>Kategoriler</h1>
 <body id="page-top" style="background-color: #20c997">
-<div id="portfolio">
-    <div class="container-fluid p-0">
-        <div class="row no-gutters">
-            @foreach (var kategori in Model)
-            {
-            <div class="col-lg-4 col-sm-6">
-                <a href="https://localhost:44396/Kategori/@kategori.KategoriAd" class="portfolio-box">
-                    <img class="img-fluid" src="~/lib/bootstrap/downloaded/assets/img/portfolio/fullsize/1.jpg" alt="">
-                    <div class="portfolio-box-caption">
-                        <div class="project-category text-white-50">Category</div>
-                        <div class="project-name">@kategori.KategoriAd</div>
+    
+    <div id="portfolio">
+        <div class="container-fluid p-0">
+            <div class="row no-gutters">
+                @foreach (var kategori in Model)
+                {
+                    <div class="col-lg-4 col-sm-6">
+                        <a href="https://localhost:44396/Kategori/@kategori.KategoriAd" class="portfolio-box">
+                            <img class="img-fluid" src="~/lib/bootstrap/downloaded/assets/img/portfolio/fullsize/1.jpg" alt="">
+                            <div class="portfolio-box-caption">
+                                <div class="project-category text-white-50">Category</div>
+                                <div class="project-name">@kategori.KategoriAd</div>
+                            </div>
+                        </a>
                     </div>
-                </a>
+                }
             </div>
-            }        
+            @{
+
+                if (yeniCookie % 2 == 1)
+                {
+                    @AlisverisSitesi2.Resources.HomeTextTR.Welcome
+                }
+                else
+                {
+                    @AlisverisSitesi2.Resources.HomeText.Welcome
+                }
+            }
         </div>
+        <script>
+            function myFunction() {
+                document.cookie = 'dil2=tr';
+               
+                location.reload();
+                document.getElementById("myCheck2").click();
+            }
+        </script>
+        <form><input type="checkbox" id="myCheck2" onmouseover="myFunction()" onclick="document.cookie='dil2=tr'"></form>
+
     </div>
-</div>
-    </body>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Third party plugin JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+
+</body>
