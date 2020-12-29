@@ -6,25 +6,47 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AlisverisSitesi.Models;
-
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.Localization;
 namespace AlisverisSitesi.Controllers
 {
     public class KullaniciController : Controller
     {
         private readonly AlisverisDb _context = new AlisverisDb();
 
-        public IActionResult SepetGetir(Kullanici kullanici)
+        public IActionResult SepetGetir()
         {
+            string isim = HttpContext.Session.GetString("ad");
             var db = new AlisverisDb();
+            var kullanici = db.Kullanicilar.Where(s => s.KullaniciAdi.Equals(isim)).Select(s => s.KullaniciID);
+            var id = Convert.ToInt32(kullanici.FirstOrDefault());
+
+
             var siparisler = from a in db.Siparisler
-                             where a.SepetID == kullanici.Sepeti.SepetID
+                             where a.SepetID == id
                              select a;
             return View(siparisler);
-            
+
+        }
+        public async Task<IActionResult> KullanicilariGoruntule()
+        {
+            return View(await _context.Kullanicilar.ToListAsync());
+        }
+        public IActionResult GirisZatenYapildi()
+        {
+            return View();
         }
         public IActionResult Giris()
         {
-            return View();
+            if (HttpContext.Session.GetInt32("kullaniciVar").HasValue)
+            {
+                return RedirectToAction(nameof(GirisZatenYapildi));
+            }
+            else
+                return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -32,10 +54,16 @@ namespace AlisverisSitesi.Controllers
         {
             var db = new AlisverisDb();
             var kullaniciKontrol = (from p in db.Kullanicilar
-             where p.KullaniciAdi == kullanici.KullaniciAdi && p.KullaniciSifresi == kullanici.KullaniciSifresi
-             select p).Any();
-            if(kullaniciKontrol == true)
+                                    where p.KullaniciAdi == kullanici.KullaniciAdi && p.KullaniciSifresi == kullanici.KullaniciSifresi
+                                    select p).Any();
+            if (kullaniciKontrol == true)
             {
+
+                var geciciKullanici = _context.Kullanicilar.Where(s => s.KullaniciAdi.Equals(kullanici.KullaniciAdi)).Select(s => s.KullaniciID);
+                var id = Convert.ToInt32(geciciKullanici.FirstOrDefault());
+                HttpContext.Session.SetInt32("kullaniciID", id);
+                HttpContext.Session.SetInt32("kullaniciVar", 1);
+                HttpContext.Session.SetString("ad", kullanici.KullaniciAdi);
                 return RedirectToAction(nameof(BasariliGiris));
             }
             else
@@ -91,6 +119,11 @@ namespace AlisverisSitesi.Controllers
         {
             if (ModelState.IsValid)
             {
+                Sepet sepet = new Sepet();
+                sepet.SepetID = kullanici.KullaniciID;
+                sepet.KullaniciID = kullanici.KullaniciID;
+                kullanici.Sepeti = sepet;
+                _context.Add(sepet);
                 _context.Add(kullanici);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

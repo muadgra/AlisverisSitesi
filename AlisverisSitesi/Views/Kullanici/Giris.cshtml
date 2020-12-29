@@ -4,29 +4,27 @@
 @model AlisverisSitesi.Models.Kullanici
 
 <body>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <form asp-action="Giris" style="color:burlywood">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="KullaniciAdi" class="control-label"></label>
-            <input asp-for="KullaniciAdi" class="form-control" />
-            <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="KullaniciSifresi" class="control-label"></label>
-            <input asp-for="KullaniciSifresi" class="form-control" />
-            <span asp-validation-for="KullaniciSifresi" class="text-danger"></span>
-        </div>
+    <header class="masthead">
+        <form asp-action="Giris" style="color:burlywood" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="KullaniciAdi" class="control-label"></label>
+                <input asp-for="KullaniciAdi" class="form-control" />
+                <span asp-validation-for="KullaniciAdi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KullaniciSifresi" class="control-label"></label>
+                <input asp-for="KullaniciSifresi" class="form-control" />
+                <span asp-validation-for="KullaniciSifresi" class="text-danger"></span>
+            </div>
 
-        <div class="form-group">
-            <input type="submit" value="Giris" class="btn btn-primary" />
-        </div>
-    </form>
-
+            <div class="form-group">
+                <input type="submit" value="Giris" class="btn btn-primary" />
+            </div>
+        </form>
+    </header>
 
 </body>
+<footer class="bg-dark py-5">
+    <div class="container"><div class="small text-center text-muted">Copyright © 2020 - Burak Çaðan Doðru - Mertcan Gökmen</div></div>
+</footer>

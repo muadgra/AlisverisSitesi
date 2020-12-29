@@ -1,39 +1,125 @@
-﻿@model IEnumerable<AlisverisSitesi.Models.Urun>
+﻿@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@{
+    @using Microsoft.AspNetCore.Http
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+    <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+    @using Microsoft.AspNetCore.Builder
+    @using Microsoft.AspNetCore.Localization
+    @using Microsoft.Extensions.Options
+    @using Microsoft.AspNetCore.Mvc.Localization
+
+}
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+}
+@{
+    var kullaniciVar = Context.Session.GetInt32("kullaniciVar");
+}
+@{
+    string culture = "", uiculture = "";
+    if (Context.Request.QueryString.HasValue)
+    {
+        string url = Context.Request.QueryString.Value;
+        culture = Context.Request.Query["culture"];
+        uiculture = Context.Request.Query["ui-culture"];
+    }
+}
+
+@model IEnumerable<AlisverisSitesi.Models.Urun>
 <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
 <body id="page-top" style="background-color: #20c997">
-    <h1>Ayakkabi</h1>
-    
-    <table>
-        <tr>
-            <th>Urun Adi</th>
-            <th>Urun Resmi</th>
-            <th>Urun Fiyati</th>
-        </tr>
-        @foreach (var ayakkabi in Model)
-        {
-        <tr>
-            <td>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="project-name">@ayakkabi.UrunAd</div>
-                </div>
-            </td>
-            <td>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="project-name"><img src=@ayakkabi.UrunResimURL height="175" width="175"></div>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <div class="project-name">@ayakkabi.UrunFiyat</div>
-                </div>
-            </td>
-            <td>
-                <form asp-action="Ayakkabi">
-                    <input type="submit" value="Sepete Ekle"/>
-                </form>
-            </td>
-        </tr>
+    <header class="masthead">
+        @{ if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+                                        {
+                ViewData["Title"] = "Ayakkabilar";
+                <h1 style="color:burlywood" class="text-uppercase font-weight-bold">
+                    
+                    Ayakkabılar
+                </h1> }
+            else
+            {
+                ViewData["Title"] = "Shoes";
+                <h1 style="color:burlywood" class="text-uppercase font-weight-bold">
+                   
+                    Shoes
+                </h1> }
+             }<br /><br />
 
-        }
-    </table>
+        <table style="color:burlywood" width="1100">
+            <tr>
+                @{ if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+                                        {
+                <th>Urun Adi</th>
+                <th>Urun Resmi</th>
+                <th>Urun Fiyati</th> }
+
+                else
+                                        {
+                <th>Product Name</th>
+                <th>Product Image</th>
+                <th>Product Price</th> }
+                            }
+                
+            </tr>
+            @foreach (var ayakkabi in Model)
+            {
+    <tr>
+
+        <td>
+            <div class="col-lg-4 col-sm-6">
+                <label asp-for=@ayakkabi.UrunAd class="control-label">@ayakkabi.UrunAd</label>
+            </div>
+        </td>
+        <td>
+            <div class="col-lg-4 col-sm-6">
+                <div class="project-name"><img src=@ayakkabi.UrunResimURL height="175" width="175"></div>
+            </div>
+        </td>
+        <td>
+            <div>
+                @{ if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+                                        {
+                     <label asp-for=@ayakkabi.UrunFiyat class="control-label">@ayakkabi.UrunFiyat TL</label>
+                 }
+
+                else
+                                        {
+                        <label asp-for=@ayakkabi.UrunFiyat class="control-label">@ayakkabi.UrunFiyat $</label>
+                 }
+                            }
+                
+            </div>
+        </td>
+        <td>
+            <form method="post" asp-action="SepeteEkle" asp-controller="Kategori" asp-route-Urunid="@ayakkabi.UrunID">
+                @{ var kullanici = Context.Session.GetInt32("kullaniciVar");
+                    if (kullanici == 1)
+                    {
+                        if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+                        {
+                    <button type="submit">Sepete Ekle</button>
+                        }
+
+                        else
+                        {
+                    <button type="submit">Add To Cart</button>
+                        }
+                    }
+                    
+                    }
+            </form>
+        </td>
+
+    </tr>}
+        </table>
+    </header>
 </body>
+<footer class="bg-dark py-5">
+    <div class="container"><div class="small text-center text-muted">Copyright © 2020 - Burak Çağan Doğru - Mertcan Gökmen</div></div>
+</footer>

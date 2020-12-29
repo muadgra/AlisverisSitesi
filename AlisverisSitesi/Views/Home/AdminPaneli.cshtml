@@ -1,0 +1,39 @@
+﻿@model IEnumerable<AlisverisSitesi.Models.Kategori>
+
+<link rel="stylesheet" href="~/lib/bootstrap/agency-bootstrap/css/styles.css" />
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+<body id="page-top" style="background-color: #20c997">
+    <h1>Index</h1>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.KategoriAd)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KategoriAd)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.KategoriId">Edit</a> |
+                        
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>

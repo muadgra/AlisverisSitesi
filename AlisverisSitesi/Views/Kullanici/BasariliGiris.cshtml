@@ -1,5 +1,48 @@
-﻿<head>
+﻿@using Microsoft.AspNetCore.Session;
+@using Microsoft.AspNetCore.Http;
+@{ var ad = Context.Session.GetString("ad"); }
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@{
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+ViewData["Title"] = "Home Page";
+
+<link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Mvc.Localization }
+@{ var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList(); }
+@{ var kullaniciVar = Context.Session.GetInt32("kullaniciVar"); }
+@{ string culture = "", uiculture = "";
+    if (Context.Request.QueryString.HasValue)
+    {
+        string url = Context.Request.QueryString.Value;
+        culture = Context.Request.Query["culture"];
+        uiculture = Context.Request.Query["ui-culture"];
+    } }
+<head>
     <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
 </head>
+<body asp-action="Index" asp-route-culture="@culture" asp-route-ui-culture="@uiculture">
+    <header class="masthead">
+        @{if (@requestCulture.RequestCulture.UICulture.Name == "tr") { 
+            <h1 class="text-center" style="color:burlywood">Giriş Başarılı</h1><br />
+        <h1 class="text-center" style="color:burlywood">Hoşgeldiniz @ad</h1>
+            }
 
-<h1 style="color:burlywood">Giris Basarili</h1>
+         else{ 
+            <h1 class="text-center" style="color:burlywood">Loged In Succesfully</h1><br />
+        <h1 class="text-center" style="color:burlywood">Welcome @ad</h1>}
+}
+
+    </header>
+</body>
+<footer class="bg-dark py-5">
+    <div class="container"><div class="small text-center text-muted">Copyright © 2020 - Burak Çağan Doğru - Mertcan Gökmen</div></div>
+</footer>

@@ -1,35 +1,93 @@
-﻿@model IEnumerable<AlisverisSitesi.Models.Kategori>
+﻿@inject IViewLocalizer Localizer
+    @inject IOptions<RequestLocalizationOptions> LocOptions
 
+    @{
+        @using Microsoft.AspNetCore.Http
+        @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+        <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+        @using Microsoft.AspNetCore.Builder
+        @using Microsoft.AspNetCore.Localization
+        @using Microsoft.Extensions.Options
+        @using Microsoft.AspNetCore.Mvc.Localization
+
+    }
+    @{
+        var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+        var cultureItems = LocOptions.Value.SupportedUICultures
+            .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+            .ToList();
+    }
+    @{
+        var kullaniciVar = Context.Session.GetInt32("kullaniciVar");
+    }
+    @{
+        string culture = "", uiculture = "";
+        if (Context.Request.QueryString.HasValue)
+        {
+            string url = Context.Request.QueryString.Value;
+            culture = Context.Request.Query["culture"];
+            uiculture = Context.Request.Query["ui-culture"];
+        }
+    }
+
+
+@model IEnumerable<AlisverisSitesi.Models.Kategori>
+
+<link rel="stylesheet" href="~/lib/bootstrap/agency-bootstrap/css/styles.css" />
 @{
-    ViewData["Title"] = "Index";
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.KategoriAd)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.KategoriAd)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.KategoriId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.KategoriId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.KategoriId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+<body id="page-top" style="background-color: #20c997">
+    <header class="masthead">
+        @{ if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+            {
+                ViewData["Title"] = "Admin Paneli";
+    <h2 style="color:burlywood" class="text-uppercase font-weight-bold">
+
+        Admin Paneli
+    </h2>
+                    <p>
+                        <a asp-action="Create">Yeni Kategori Ekle</a>
+                    </p> }
+                                else
+                                {
+                                    ViewData["Title"] = "Admin Section";
+                    <h2 style="color:burlywood" class="text-uppercase font-weight-bold">
+
+                        Admin Section
+                    </h2>
+                                    <p>
+                                        <a asp-action="Create">Create New Category</a>
+                                    </p>} }<br /><br />
+        <table class="table" style="color:chocolate">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.KategoriAd)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.KategoriAd)
+        </td>
+        <td>
+            
+            <a asp-action="Edit" asp-route-id="@item.KategoriId">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.KategoriId">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.KategoriId">Delete</a>
+        </td>
+    </tr>            }
+            </tbody>
+        </table>
+    </header>
+</body>

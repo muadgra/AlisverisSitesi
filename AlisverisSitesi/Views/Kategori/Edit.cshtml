@@ -1,34 +1,37 @@
 ﻿@model AlisverisSitesi.Models.Kategori
 
-@{
-    ViewData["Title"] = "Edit";
-}
+@{ ViewData["Title"] = "Edit"; }
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+</head>
+<body>
+    <header class="masthead">
+        <h1>Edit</h1>
 
-<h1>Edit</h1>
-
-<h4>Kategori</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="KategoriId" />
-            <div class="form-group">
-                <label asp-for="KategoriAd" class="control-label"></label>
-                <input asp-for="KategoriAd" class="form-control" />
-                <span asp-validation-for="KategoriAd" class="text-danger"></span>
+        <h4>Kategori</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="KategoriId" />
+                    <div class="form-group">
+                        <label asp-for="KategoriAd" class="control-label"></label>
+                        <input asp-for="KategoriAd" class="form-control" />
+                        <span asp-validation-for="KategoriAd" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+        </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </header>
+</body>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

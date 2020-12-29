@@ -1,11 +1,126 @@
-﻿@model IEnumerable<AlisverisSitesi.Models.Urun>
+﻿@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@{
+    @using Microsoft.AspNetCore.Http
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+    <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+    @using Microsoft.AspNetCore.Builder
+    @using Microsoft.AspNetCore.Localization
+    @using Microsoft.Extensions.Options
+    @using Microsoft.AspNetCore.Mvc.Localization
+
+}
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+}
+@{
+    var kullaniciVar = Context.Session.GetInt32("kullaniciVar");
+}
+@{
+    string culture = "", uiculture = "";
+    if (Context.Request.QueryString.HasValue)
+    {
+        string url = Context.Request.QueryString.Value;
+        culture = Context.Request.Query["culture"];
+        uiculture = Context.Request.Query["ui-culture"];
+    }
+}
+
+@model IEnumerable<AlisverisSitesi.Models.Urun>
 <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
 <body id="page-top" style="background-color: #20c997">
-    <h1>Ayakkabi</h1>
+    <header class="masthead">
+    @{ if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+             {
+                 ViewData["Title"] = "Teknoloji";
+                <h1 style="color:burlywood" class="text-uppercase font-weight-bold">
+                     Teknoloji
+                </h1> }
+             else
+             {
+                 ViewData["Title"] = "Technology";
+                <h1 style="color:burlywood" class="text-uppercase font-weight-bold">
+                    Technology
+                </h1> }
+                            }<br /><br />
+        <table style="color:burlywood" width="1100">
+            <tr>
+                @{ if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+                                        {
+                <th>Urun Adi</th>
+                <th>Urun Resmi</th>
+                <th>Urun Fiyati</th> }
+
+                else
+                                        {
+                <th>Product Name</th>
+                <th>Product Image</th>
+                <th>Product Price</th> }
+                            }
+                
+            </tr>
     @foreach (var teknolojik in Model)
     {
-        <div class="col-lg-4 col-sm-6">
-            <div class="project-name">@teknolojik.UrunAd</div>
-        </div>
-    }
+        <tr>
+
+        <td>
+            <div class="col-lg-4 col-sm-6">
+                <label asp-for=@teknolojik.UrunAd class="control-label">@teknolojik.UrunAd</label>
+            </div>
+        </td>
+        <td>
+            <div class="col-lg-4 col-sm-6">
+                <div class="project-name"><img src=@teknolojik.UrunResimURL height="175" width="175"></div>
+            </div>
+        </td>
+        <td>
+            <div>
+                @{ if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+                    {
+                     <label asp-for=@teknolojik.UrunFiyat class="control-label">@teknolojik.UrunFiyat TL</label>
+                    }
+
+                    else
+                    {
+                        <label asp-for=@teknolojik.UrunFiyat class="control-label">@teknolojik.UrunFiyat $</label>
+                    }
+                            }
+                
+            </div>
+        </td>
+        <td>
+
+            <form method="post" asp-action="SepeteEkle" asp-controller="Kategori" asp-route-Urunid="@teknolojik.UrunID">
+                @{ var kullanici = Context.Session.GetInt32("kullaniciVar");
+                    if (kullanici == 1)
+                    {
+                        if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+                        {
+                    <button type="submit">Sepete Ekle</button>
+                        }
+
+                        else
+                        {
+                    <button type="submit">Add To Cart</button>
+                        }
+                    }
+                    
+                    }
+
+            </form>
+        </td>
+
+    </tr>}
+    
+}
+            </table>
+    </header>
 </body>
+<footer class="bg-dark py-5">
+    <div class="container"><div class="small text-center text-muted">Copyright © 2020 - Burak Çağan Doğru - Mertcan Gökmen</div></div>
+</footer>

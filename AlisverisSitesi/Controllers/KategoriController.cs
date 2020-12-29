@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,7 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AlisverisSitesi.Models;
-
+using Microsoft.AspNetCore.Session;
+using Microsoft.AspNetCore.Http;
 namespace AlisverisSitesi.Controllers
 {
     public class KategoriController : Controller
@@ -23,7 +25,7 @@ namespace AlisverisSitesi.Controllers
         {
             return View(await _context.Kategoriler.ToListAsync());
         }
-
+        
         // GET: Kategori/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -48,6 +50,7 @@ namespace AlisverisSitesi.Controllers
             return View();
         }
 
+
         // POST: Kategori/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -65,15 +68,24 @@ namespace AlisverisSitesi.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SepeteEkle([Bind("UrunID,KategoriID,Kategori,StokMiktari,UrunAd,UrunResimURL,UrunFiyat")] Urun urun)
+        public async Task<IActionResult> SepeteEkle(int urunId)
         {
+            //var ui = HttpContext.Request.Form["urunId"];
+            string isim = HttpContext.Session.GetString("ad");
+            //string urun = HttpContext.Request.Form["SepeteEkle"];
+            Siparis siparis = new Siparis();
             if (ModelState.IsValid)
             {
-                _context.Add(urun);
+                
+                var kullanici = _context.Kullanicilar.Where(s => s.KullaniciAdi.Equals(isim)).Select(s => s.KullaniciID);
+                var id = Convert.ToInt32(kullanici.FirstOrDefault()); 
+                siparis.SepetID = id;
+                siparis.UrunID = urunId;
+                _context.Add(siparis);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("SepetGetir","Kullanici");
             }
-            return View(urun);
+            return View(siparis);
         }
         // GET: Kategori/Edit/5
         public async Task<IActionResult> Edit(int? id)

@@ -1,0 +1,80 @@
+﻿@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@{
+    @using Microsoft.AspNetCore.Http
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+    ViewData["Title"] = "Home Page";
+    <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+    @using Microsoft.AspNetCore.Builder
+    @using Microsoft.AspNetCore.Localization
+    @using Microsoft.Extensions.Options
+    @using Microsoft.AspNetCore.Mvc.Localization
+
+}
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+}
+@{
+    var kullaniciVar = Context.Session.GetInt32("kullaniciVar");
+}
+@{
+    string culture = "", uiculture = "";
+    if (Context.Request.QueryString.HasValue)
+    {
+        string url = Context.Request.QueryString.Value;
+        culture = Context.Request.Query["culture"];
+        uiculture = Context.Request.Query["ui-culture"];
+    }
+}
+@model IEnumerable<AlisverisSitesi.Models.Kullanici>
+
+<link rel="stylesheet" href="~/lib/bootstrap/agency-bootstrap/css/styles.css" />
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+<link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+<body>
+    <header class="masthead">
+        @{ if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+                                        {
+                            <h1 class=" text-white font-weight-bold">
+                                Kullanıcıları Görüntüle
+                            </h1> }
+                                        else
+                                        {
+                            <h1 class=" text-white font-weight-bold">
+                                User List
+                            </h1> }
+                            }
+
+        <table class="table" style="color:chocolate">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.KullaniciAdi)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.KullaniciAdi)
+        </td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.KullaniciID">Edit</a> |
+        </td>
+        <td>
+            <a asp-action="Details" asp-route-id="@item.KullaniciID">Details</a>
+        </td>
+    </tr>            }
+            </tbody>
+        </table>
+    </header>
+</body>
