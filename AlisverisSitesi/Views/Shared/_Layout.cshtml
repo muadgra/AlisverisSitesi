@@ -1,9 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
+@{
+    @using Microsoft.AspNetCore.Http
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+}
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - AlisverisSitesi</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/agency-bootstrap/css/styles.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -14,14 +19,41 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                        <li class="nav-item" ><img src="~/lib/logo.png" height="45" width="45"/></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Home" asp-action="Index"><font size="3">Anasayfa</font></a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Home" asp-action="Onerilenler"><font size="3">Önerilenler</font></a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kategori" asp-action="Kategoriler"><font size="3">Kategoriler</font></a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Iletisim" asp-action="Iletisim"><font size="3">Iletisim</font></a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Home" asp-action="Giris"><font size="3">Giris</font></a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="UyeOl"><font size="3">UyeOl</font></a></li>
+                        @{
+                            
+                            {
+                                
+                                <li class="nav-item"><img src="~/lib/logo.png" height="45" width="45" /></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Home" asp-action="Index"><font size="3">@AlisverisSitesi2.Resources.HomeText.Anasayfa</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Home" asp-action="Onerilenler"><font size="3">@AlisverisSitesi2.Resources.HomeText.Önerilenler</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kategori" asp-action="Kategoriler"><font size="3">@AlisverisSitesi2.Resources.HomeText.Kategoriler</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Iletisim" asp-action="Iletisim"><font size="3">@AlisverisSitesi2.Resources.HomeText.Iletisim</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="Giris"><font size="3">@AlisverisSitesi2.Resources.HomeText.Giris</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="UyeOl"><font size="3">@AlisverisSitesi2.Resources.HomeText.UyeOl</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="SepetGetir"><font size="3">Sepet</font></a></li>
+
+                                }
+                            /*
+                            {
+                                <li class="nav-item"><img src="~/lib/logo.png" height="45" width="45" /></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Home" asp-action="Index"><font size="3">Anasayfa</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Home" asp-action="Onerilenler"><font size="3">Önerilenler</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kategori" asp-action="Kategoriler"><font size="3">Kategoriler</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Iletisim" asp-action="Iletisim"><font size="3">Iletisim</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Home" asp-action="Giris"><font size="3">Giris</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="UyeOl"><font size="3">UyeOl</font></a></li>
+                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="SepetGetir"><font size="3">Sepet</font></a></li>
+                                }*/
+                        }
+
                     </ul>
+                    <script>
+                        function myFunction() {
+                            document.cookie = 'dil1=en'
+                            location.reload();
+                            document.getElementById("myCheck").click();
+                        }
+                    </script>
                 </div>
             </div>
         </nav>
@@ -32,12 +64,10 @@
         </main>
     </div>
 
-    
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>
 
     
     @RenderSection("Scripts", required: false)
-</body>
-</html>

@@ -12,11 +12,35 @@ namespace AlisverisSitesi.Controllers
     public class KullaniciController : Controller
     {
         private readonly AlisverisDb _context = new AlisverisDb();
-        /*
-        public KullaniciController(AlisverisDb context)
+
+        public IActionResult SepetGetir(Kullanici kullanici)
         {
-            _context = context;
-        }*/
+            var db = new AlisverisDb();
+            var siparisler = from a in db.Siparisler
+                             where a.SepetID == kullanici.Sepeti.SepetID
+                             select a;
+            return View(siparisler);
+            
+        }
+        public IActionResult Giris()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Giris([Bind("KullaniciAdi,KullaniciSifresi")] Kullanici kullanici)
+        {
+            var db = new AlisverisDb();
+            var kullaniciKontrol = (from p in db.Kullanicilar
+             where p.KullaniciAdi == kullanici.KullaniciAdi && p.KullaniciSifresi == kullanici.KullaniciSifresi
+             select p).Any();
+            if(kullaniciKontrol == true)
+            {
+                return RedirectToAction(nameof(BasariliGiris));
+            }
+            else
+                return RedirectToAction(nameof(BasarisizGiris));
+        }
         public IActionResult UyeOl()
         {
             return View();
@@ -27,7 +51,14 @@ namespace AlisverisSitesi.Controllers
             return View(/*await _context.Kullanicilar.ToListAsync()*/);
         }
 
-        // GET: Kullanici/Details/5
+        public IActionResult BasariliGiris()
+        {
+            return View();
+        }
+        public IActionResult BasarisizGiris()
+        {
+            return View();
+        }
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

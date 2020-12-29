@@ -11,7 +11,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.Razor;
 namespace AlisverisSitesi
 {
     public class Startup
@@ -26,9 +29,29 @@ namespace AlisverisSitesi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication("CookieAuth").AddCookie("CookieAuth", config => {
+                config.Cookie.Name = "Grandmas.Cookie";
+            });
+
+            services.AddMvc()
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en-US"),
+                    new CultureInfo("tr")
+                };
+                options.DefaultRequestCulture = new RequestCulture(culture: "tr");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            }
+                
+            );
             services.AddControllersWithViews();
             services.AddSession();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            
             /*
             var connection = @"server =.; database=BookStore;trusted_connection=true;";
             services.AddDbContext<AlisverisDb>(options => options.UseSqlServer(connection));*/

@@ -161,6 +161,7 @@ namespace AlisverisSitesi.Controllers
         }
         public IActionResult Kategoriler()
         {
+            
             var db = new AlisverisDb();
             var KategorilerListesi = db.Kategoriler.ToList();
             return View(KategorilerListesi);
@@ -168,7 +169,6 @@ namespace AlisverisSitesi.Controllers
         public IActionResult Ayakkabi()
         {
             var db = new AlisverisDb();
-            //var KategorilerListesi = db.Kategoriler.ToList();
             var Ayakkabilar = from a in db.Urunler
                               where a.KategoriID == 1
                               select a;

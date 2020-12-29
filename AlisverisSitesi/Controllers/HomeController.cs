@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AlisverisSitesi.Models;
-
+using System.Web;
 namespace AlisverisSitesi.Controllers
 {
     public class HomeController : Controller
@@ -15,12 +15,16 @@ namespace AlisverisSitesi.Controllers
 
         public HomeController(ILogger<HomeController> logger)
         {
+            
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-            HttpContext.Response.Cookies.Append("dil", "tr");
+            
+            HttpContext.Response.Cookies.Append("dil1", "tr");
+            HttpContext.Response.Cookies.Append("dil3", "0");
+            HttpContext.Response.Cookies.Append("dil2", "en");
             return View();
         }
 
@@ -41,5 +45,9 @@ namespace AlisverisSitesi.Controllers
             return View(Urunler);
         }
 
+        public IActionResult Authenticate()
+        {
+            return RedirectToAction("Index");
+        }
     }
 }
