@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 @{
     @using Microsoft.AspNetCore.Http
@@ -15,6 +15,7 @@
     var cultureItems = LocOptions.Value.SupportedUICultures
         .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
         .ToList();
+    var kullaniciVar = Context.Session.GetInt32("kullaniciVar");
 }
 @{
     string culture = "", uiculture = "";
@@ -53,8 +54,16 @@
                                 <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Home" asp-action="Onerilenler"><font size="3">Önerilenler</font></a></li>
                                 <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kategori" asp-action="Kategoriler"><font size="3">Kategoriler</font></a></li>
                                 <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Iletisim" asp-action="Iletisim"><font size="3">Iletisim</font></a></li>
-                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="Giris"><font size="3">Giris</font></a></li>
-                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="UyeOl"><font size="3">UyeOl</font></a></li>
+                                if (kullaniciVar != 1)
+                                {
+                                    <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="Giris"><font size="3">Giris</font></a></li>
+                                    <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="UyeOl"><font size="3">UyeOl</font></a></li>
+                                }
+                                if (kullaniciVar == 1)
+                                {
+                                    <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="SepetGetir"><font size="3">Sepet</font></a></li>
+
+                                }
                             }
                             else
                             {
@@ -63,9 +72,11 @@
                                 <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Home" asp-action="Onerilenler"><font size="3">Recommended</font></a></li>
                                 <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kategori" asp-action="Kategoriler"><font size="3">Categories</font></a></li>
                                 <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Iletisim" asp-action="Iletisim"><font size="3">Contact Us</font></a></li>
-                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="Giris"><font size="3">Login</font></a></li>
-                                <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="UyeOl"><font size="3">Sign Up</font></a></li>
-
+                                if (kullaniciVar != 1)
+                                {
+                                    <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="Giris"><font size="3">Login</font></a></li>
+                                    <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-controller="Kullanici" asp-action="UyeOl"><font size="3">Sign Up</font></a></li>
+                                }
                             }
 
                         }

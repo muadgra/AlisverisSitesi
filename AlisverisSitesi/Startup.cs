@@ -50,6 +50,7 @@ namespace AlisverisSitesi
         
             services.AddControllersWithViews();
             services.AddSession();
+            services.AddDistributedMemoryCache();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             
             /*

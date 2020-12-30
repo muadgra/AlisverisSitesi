@@ -6,25 +6,44 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AlisverisSitesi.Models;
-
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.Localization;
 namespace AlisverisSitesi.Controllers
 {
     public class KullaniciController : Controller
     {
         private readonly AlisverisDb _context = new AlisverisDb();
 
-        public IActionResult SepetGetir(Kullanici kullanici)
+        public IActionResult SepetGetir()
         {
+            string isim = HttpContext.Session.GetString("ad");
             var db = new AlisverisDb();
+            var kullanici = db.Kullanicilar.Where(s => s.KullaniciAdi.Equals(isim)).Select(s => s.KullaniciID);
+            var id = Convert.ToInt32(kullanici.FirstOrDefault());
+
+
             var siparisler = from a in db.Siparisler
-                             where a.SepetID == kullanici.Sepeti.SepetID
+                             where a.SepetID == id
                              select a;
             return View(siparisler);
             
         }
-        public IActionResult Giris()
+        public IActionResult GirisZatenYapildi()
         {
             return View();
+        }
+        public IActionResult Giris()
+        {
+            if (HttpContext.Session.GetInt32("kullaniciVar").HasValue)
+            {        
+                return RedirectToAction(nameof(GirisZatenYapildi));
+            }
+            else
+               return View();
+            
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -36,6 +55,9 @@ namespace AlisverisSitesi.Controllers
              select p).Any();
             if(kullaniciKontrol == true)
             {
+                HttpContext.Session.SetInt32("kullaniciID", kullanici.KullaniciID);
+                HttpContext.Session.SetInt32("kullaniciVar", 1);
+                HttpContext.Session.SetString("ad", kullanici.KullaniciAdi);
                 return RedirectToAction(nameof(BasariliGiris));
             }
             else

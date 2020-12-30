@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AlisverisSitesi.Models;
 using System.Web;
+
 namespace AlisverisSitesi.Controllers
 {
     public class HomeController : Controller

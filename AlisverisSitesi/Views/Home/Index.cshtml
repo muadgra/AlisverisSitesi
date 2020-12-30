@@ -20,6 +20,9 @@
         .ToList();
 }
 @{
+    var kullaniciVar = Context.Session.GetInt32("kullaniciVar");
+}
+@{
     string culture = "", uiculture = "";
     if (Context.Request.QueryString.HasValue)
     {
@@ -29,7 +32,7 @@
     }
 }
 <body id="page-top" style="background-color: #20c997" asp-action="Index" asp-route-culture="@culture" asp-route-ui-culture="@uiculture">
-
+    <br />
     <header class="masthead">
         @{
             if (@requestCulture.RequestCulture.UICulture.Name == "tr")
@@ -41,8 +44,12 @@
             else
             {
                 <h1>Welcome!</h1>
-                }
             }
+            if(kullaniciVar == 1)
+            {
+                <h1>su an uye girili</h1>
+            }
+        }
 
         <div asp-validation-summary="All" class="text-danger"></div>
 
