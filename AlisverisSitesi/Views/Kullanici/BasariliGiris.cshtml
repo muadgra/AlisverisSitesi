@@ -1,5 +1,14 @@
-﻿<head>
+﻿@using Microsoft.AspNetCore.Session;
+@using Microsoft.AspNetCore.Http;
+@{
+    var ad = Context.Session.GetString("ad");
+}
+<head>
     <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
 </head>
-
-<h1 style="color:burlywood">Giris Basarili</h1>
+<br />
+<br />
+<br />
+<br />
+<br />
+<h1 style="color:burlywood">Giris Basarili, @ad</h1>

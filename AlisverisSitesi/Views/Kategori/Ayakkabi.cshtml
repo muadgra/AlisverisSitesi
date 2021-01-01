@@ -3,37 +3,42 @@
 <body id="page-top" style="background-color: #20c997">
     <h1>Ayakkabi</h1>
     
-    <table>
-        <tr>
-            <th>Urun Adi</th>
-            <th>Urun Resmi</th>
-            <th>Urun Fiyati</th>
-        </tr>
-        @foreach (var ayakkabi in Model)
-        {
-        <tr>
-            <td>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="project-name">@ayakkabi.UrunAd</div>
-                </div>
-            </td>
-            <td>
-                <div class="col-lg-4 col-sm-6">
-                    <div class="project-name"><img src=@ayakkabi.UrunResimURL height="175" width="175"></div>
-                </div>
-            </td>
-            <td>
-                <div>
-                    <div class="project-name">@ayakkabi.UrunFiyat</div>
-                </div>
-            </td>
-            <td>
-                <form asp-action="Ayakkabi">
-                    <input type="submit" value="Sepete Ekle"/>
-                </form>
-            </td>
-        </tr>
-
+        <table style="color:burlywood">
+            <tr>
+                <th>Urun ID</th>
+                <th>Urun Adi</th>
+                <th>Urun Resmi</th>
+                <th>Urun Fiyati</th>
+            </tr>
+            @foreach (var ayakkabi in Model)
+            {
+                <tr>
+                    
+                    <td>
+                        <div class="col-lg-4 col-sm-6">
+                            <label asp-for=@ayakkabi.UrunAd class="control-label">@ayakkabi.UrunAd</label>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="project-name"><img src=@ayakkabi.UrunResimURL height="175" width="175"></div>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <label asp-for=@ayakkabi.UrunFiyat class="control-label">@ayakkabi.UrunFiyat</label>
+                        </div>
+                    </td>
+                    <td>
+                        <form method="post" asp-action="SepeteEkle" asp-controller="Kategori" asp-route-Urunid="@ayakkabi.UrunID">
+                            <div class="col-lg-4 col-sm-6">
+                                <label asp-for=@ayakkabi.UrunID class="control-label">@ayakkabi.UrunID</label>
+                            </div>
+                            <button type="submit"> sepete ekle</button>
+                        </form>
+                    </td>
+                    
+             </tr>
         }
-    </table>
+        </table>
 </body>

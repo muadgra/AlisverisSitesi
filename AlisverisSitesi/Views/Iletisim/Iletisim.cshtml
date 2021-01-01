@@ -1,11 +1,52 @@
-﻿<link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+﻿@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
 
+@{
+    @using Microsoft.AspNetCore.Http
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+    ViewData["Title"] = "Home Page";
+    //var dil = HttpContextAccessor.HttpContext.Request.Cookies["dil1"].ToString();
+    <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+    @using Microsoft.AspNetCore.Builder
+    @using Microsoft.AspNetCore.Localization
+    @using Microsoft.Extensions.Options
+    @using Microsoft.AspNetCore.Mvc.Localization
 
+}
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+}
+@{
+    var kullaniciVar = Context.Session.GetInt32("kullaniciVar");
+}
+@{
+    string culture = "", uiculture = "";
+    if (Context.Request.QueryString.HasValue)
+    {
+        string url = Context.Request.QueryString.Value;
+        culture = Context.Request.Query["culture"];
+        uiculture = Context.Request.Query["ui-culture"];
+    }
+}
 <header class="masthead">
     <div style="padding-top: 100px">
         <div class=" align-items-center justify-content-center text-center">
             <div>
+                @{
+                    if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+                    {
 
+                        <h2 class="text-uppercase text-white font-weight-bold">İletişim Bilgileri</h2><br /><br />
+
+                    }
+                    else
+                    {
+                        <h1>Contact Us</h1>
+                    }
+                }
                 <h2 class="text-uppercase text-white font-weight-bold">Iletisim Bilgilerimiz</h2><br /><br />
                 <h3 class="text-uppercase text-white font-weight-bold">Burak Çağan Doğru - B171210022 - 1. Öğretim C Grubu</h3><br />
                 <h3 class="text-uppercase text-white font-weight-bold">Mertcan Gökmen - B171210033 - 2. Öğretim B grubu </h3>

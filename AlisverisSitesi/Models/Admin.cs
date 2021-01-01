@@ -8,6 +8,6 @@ namespace AlisverisSitesi.Models
 {
     public class Admin : Kullanici
     {
-        public int EklenenUrunSayisi { get; set; }
+        //public int EklenenUrunSayisi { get; set; }
     }
 }

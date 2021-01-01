@@ -2,11 +2,8 @@
 
 <link rel="stylesheet" href="~/lib/bootstrap/agency-bootstrap/css/styles.css" />
 @{
-    
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
 <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
 <body id="page-top" style="background-color: #20c997">
     <h1>Index</h1>
@@ -14,7 +11,7 @@
     <p>
         <a asp-action="Create">Create New</a>
     </p>
-    <table class="table" style="color:chocolate">
+    <table class="table">
         <thead>
             <tr>
                 <th>
@@ -32,11 +29,11 @@
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.KategoriId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.KategoriId">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.KategoriId">Delete</a>
+                        
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+
 </body>
