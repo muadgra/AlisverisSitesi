@@ -1,0 +1,6 @@
+Alışveriş Sitesi, kullanıcıların üye olup, giriş yaptıktan sonra ürün satın almalarını sağlayan bir yapıdadır.
+Kullanıcılar aynı zamanda Admin olabilirler. Adminler, kategorileri ve kullanıcıları değiştirme yetkisine sahiptirler.
+Kullanıcılar için İngilizce ve Türkçe olmak üzere iki dil seçeneği bulunur. Bu diller, siteye ait menüden değiştirilebilir.
+Siteden verilen siparişler, satıştaki ürünler, kullanıcılar, kullanıcılara ait sepet bilgisi ve kategoriler MSSQL Veritabanı'nda saklanmaktadır.
+MSSQL Veritabanı, Entity Framework kullanılarak Code First yaklaşımı çerçevesinde geliştirilmiştir.
+Veritabanı üzerindeki değişiklikler, projenin farklı etaplarında yapılmıştır ve proje içinde migration olarak saklanmıştır.
