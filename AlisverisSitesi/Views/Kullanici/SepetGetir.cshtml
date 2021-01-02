@@ -44,19 +44,14 @@
 }
 <body>
     <header class="masthead">
-        
-        @{
-            foreach (var item in Model)
-            {
-                urunSayisi++;
+        <table class="table" style="color:chocolate">
+            <thead>
 
-                <table class="table" style="color:chocolate">
-                    <thead>
-                        <tr>
-                            @{ if (@requestCulture.RequestCulture.UICulture.Name == "tr")
-                                {
-                                    ViewData["Title"] = "Sepet";
-                                    <th>
+                <tr>
+                    @{ if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+                        {
+                            ViewData["Title"] = "Sepet";
+                            <th>
                                 @Html.DisplayNameFor(item => item.UrunID)
                             </th>
                             <th>
@@ -68,10 +63,10 @@
                             <th>
                                 Urun Fiyatı
                             </th>
-                                }
-                                else
-                                {
-                                    ViewData["Title"] = "My Cart";
+                        }
+                        else
+                        {
+                            ViewData["Title"] = "My Cart";
                             <th>
                                 @Html.DisplayNameFor(item => item.UrunID)
                             </th>
@@ -85,11 +80,17 @@
                                 Product Price
                             </th>
 
-                                }
-                            }
-                            
-                        </tr>
-                    </thead>
+                        }
+                    }
+
+                </tr>
+            </thead>
+            @{
+                foreach (var item in Model)
+                {
+                    urunSayisi++;
+
+
                     <tbody>
 
                         <tr>
@@ -111,15 +112,15 @@
                             <td>
                                 @{ if (@requestCulture.RequestCulture.UICulture.Name == "tr")
                                     {
-                                         <label asp-for=@urun.UrunFiyat class="control-label">@urun.UrunFiyat TL</label>
+                                        <label asp-for=@urun.UrunFiyat class="control-label">@urun.UrunFiyat TL</label>
                                     }
                                     else
                                     {
-                                         <label asp-for=@urun.UrunFiyat class="control-label">@urun.UrunFiyat $</label>
+                                        <label asp-for=@urun.UrunFiyat class="control-label">@urun.UrunFiyat $</label>
 
                                     }
-                            }
-                               
+                                }
+
 
                                 <script>
                                  @{
@@ -135,55 +136,60 @@
                         </tr>
 
                     </tbody>
-                </table>
-                                         
 
-                                     }
-        }
-        @{ if (@requestCulture.RequestCulture.UICulture.Name == "tr")
-            {
 
-                <p class="text-white font-weight-bold">Toplam Fiyat: @fiyat TL</p>
-            }
-            else
-            {
-                 <p  class="text-white font-weight-bold">Total: @fiyat $</p>
-            }
-                            }
-        
-        @{ 
-            if (urunSayisi != 0)
-            {if (@requestCulture.RequestCulture.UICulture.Name == "tr")
-            {
 
-                <form asp-action="SiparisVer" method="post">
-                    <input type="submit" class="btn btn-primary" value="Siparis Ver" />
-                </form>
+                }
             }
-            else
-            {
-                 <form asp-action="SiparisVer" method="post">
-                    <input type="submit" class="btn btn-primary" value="Order" />
-                 </form>
+        </table>
+            @{ if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+                {
+
+                    <p class="text-white font-weight-bold">Toplam Fiyat: @fiyat TL</p>
+                }
+                else
+                {
+                    <p class="text-white font-weight-bold">Total: @fiyat $</p>
+                }
+            }
+
+            @{
+                if (urunSayisi != 0)
+                {
+                    if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+                    {
+
+                        <form asp-action="SiparisVer" method="post">
+                            <input type="submit" class="btn btn-primary" value="Siparis Ver" />
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-action="SiparisVer" method="post">
+                            <input type="submit" class="btn btn-primary" value="Order" />
+                        </form>
+                    }
+
+                }
+                else
+                {
+                    if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+                    {
+                        ViewData["Title"] = "Sepet";
+                        <h2 class="text-black-50 text-center text-white">Sepetiniz Boş</h2>
+}
+                    else
+                    {
+                        ViewData["Title"] = "My Cart";
+                        <h2 class="text-black-50 text-center text-white">Your Cart Is Empty</h2>
+}
+
+
                 }
 
             }
-            else {
-                if (@requestCulture.RequestCulture.UICulture.Name == "tr")
-                {
-                            ViewData["Title"] = "Sepet";
-                             <h2 class="text-black-50 text-center text-white">Sepetiniz Boş</h2>}
-                else
-                {
-                             ViewData["Title"] = "My Cart";
-                             <h2 class="text-black-50 text-center text-white">Your Cart Is Empty</h2>}
-                            
-            
-            }
 
-        }   
-        
-                
-            
-    </header>
+
+
+</header>
 </body>

@@ -14,7 +14,23 @@ namespace AlisverisSitesi.Controllers
     public class KategoriController : Controller
     {
         private readonly AlisverisDb _context = new AlisverisDb();
-        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UrunEkle([Bind("UrunAd,StokMiktari,UrunResimURL,UrunFiyat,KategoriID, KategoriAdi")] Urun urun)
+        {
+            if (ModelState.IsValid)
+            {
+                
+                _context.Add(urun);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(UrunEkle));
+            }
+            return View(urun);
+        }
+        public IActionResult UrunEkle()
+        {
+            return View();
+        }
         // GET: Kategori
         public async Task<IActionResult> Index()
         {
