@@ -14,12 +14,7 @@ namespace AlisverisSitesi.Controllers
     public class KategoriController : Controller
     {
         private readonly AlisverisDb _context = new AlisverisDb();
-        /*
-        public KategoriController(AlisverisDb context)
-        {
-            _context = context;
-        }*/
-
+        
         // GET: Kategori
         public async Task<IActionResult> Index()
         {

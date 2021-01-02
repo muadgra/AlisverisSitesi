@@ -4,7 +4,7 @@
 
     ViewData["Title"] = "Home Page";
     <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
-    
+    var db = new AlisverisDb();
 }
 <body>
     <header class="masthead">
@@ -14,8 +14,46 @@
         @{
             foreach (var item in Model)
             {
-                <p>@item.SiparisID</p>
-            }
+                <table class="table" style="color:chocolate">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(item => item.UrunID)
+                            </th>
+                            <th>
+                                Urun Resmi
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>
+                                <p>@item.UrunID</p>
+                            </td>
+                            <td>
+                                @{
+
+                                    var urun = db.Urunler.FirstOrDefault(urun => urun.UrunID == item.UrunID);
+
+
+                                }
+                                <img src=@urun.UrunResimURL style="width: 75px; height:75px">
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                                    }
         }
+        
+            
+        <form asp-action="SiparisVer" method="post">
+            <input type="submit" class="btn btn-primary" value="Siparis Ver" />
+        </form>
+                
+            
     </header>
 </body>

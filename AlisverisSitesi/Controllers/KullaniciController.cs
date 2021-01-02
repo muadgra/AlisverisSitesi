@@ -16,7 +16,28 @@ namespace AlisverisSitesi.Controllers
     public class KullaniciController : Controller
     {
         private readonly AlisverisDb _context = new AlisverisDb();
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SiparisVer()
+        {
+            string isim = HttpContext.Session.GetString("ad");
+            var db = new AlisverisDb();
+            var kullanici = db.Kullanicilar.Where(s => s.KullaniciAdi.Equals(isim)).Select(s => s.KullaniciID);
+            var id = Convert.ToInt32(kullanici.FirstOrDefault());
+            var siparisler = db.Siparisler.Where(s => s.SepetID == id);
+            if (siparisler != null)
+            {
+                foreach (var silinecek in siparisler) {
+                    db.Siparisler.Remove(silinecek);
+                }
+                db.SaveChanges();
+            }
+            return RedirectToAction(nameof(SiparisVerildi));
+        }
+        public IActionResult SiparisVerildi()
+        {
+            return View();
+        }
         public IActionResult SepetGetir()
         {
             string isim = HttpContext.Session.GetString("ad");
