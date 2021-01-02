@@ -1,28 +1,93 @@
-﻿@model IEnumerable<AlisverisSitesi.Models.Siparis>
+﻿@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@{
+    @using Microsoft.AspNetCore.Http
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+    <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+    @using Microsoft.AspNetCore.Builder
+    @using Microsoft.AspNetCore.Localization
+    @using Microsoft.Extensions.Options
+    @using Microsoft.AspNetCore.Mvc.Localization
+
+}
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+}
+@{
+    var kullaniciVar = Context.Session.GetInt32("kullaniciVar");
+}
+@{
+    string culture = "", uiculture = "";
+    if (Context.Request.QueryString.HasValue)
+    {
+        string url = Context.Request.QueryString.Value;
+        culture = Context.Request.Query["culture"];
+        uiculture = Context.Request.Query["ui-culture"];
+    }
+}
+
+@model IEnumerable<AlisverisSitesi.Models.Siparis>
 
 @{
 
-    ViewData["Title"] = "Home Page";
+    
     <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
     var db = new AlisverisDb();
+    double fiyat = 0;
+    int urunSayisi = 0;
+
 }
 <body>
     <header class="masthead">
-        <br />
-        <br />
-        <br />
+        
         @{
             foreach (var item in Model)
             {
+                urunSayisi++;
+
                 <table class="table" style="color:chocolate">
                     <thead>
                         <tr>
-                            <th>
+                            @{ if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+                                {
+                                    ViewData["Title"] = "Sepet";
+                                    <th>
                                 @Html.DisplayNameFor(item => item.UrunID)
                             </th>
                             <th>
                                 Urun Resmi
                             </th>
+                            <th>
+                                Urun Adı
+                            </th>
+                            <th>
+                                Urun Fiyatı
+                            </th>
+                                }
+                                else
+                                {
+                                    ViewData["Title"] = "My Cart";
+                            <th>
+                                @Html.DisplayNameFor(item => item.UrunID)
+                            </th>
+                            <th>
+                                Product Image
+                            </th>
+                            <th>
+                                Product Name
+                            </th>
+                            <th>
+                                Product Price
+                            </th>
+
+                                }
+                            }
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -40,19 +105,84 @@
                                 }
                                 <img src=@urun.UrunResimURL style="width: 75px; height:75px">
                             </td>
+                            <td>
+                                <label asp-for=@urun.UrunAd class="control-label">@urun.UrunAd</label>
+                            </td>
+                            <td>
+                                @{ if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+                                    {
+                                         <label asp-for=@urun.UrunFiyat class="control-label">@urun.UrunFiyat TL</label>
+                                    }
+                                    else
+                                    {
+                                         <label asp-for=@urun.UrunFiyat class="control-label">@urun.UrunFiyat $</label>
+
+                                    }
+                            }
+                               
+
+                                <script>
+                                 @{
+
+
+                                     fiyat += urun.UrunFiyat;
+
+
+                                }
+                                </script>
+                            </td>
 
                         </tr>
 
                     </tbody>
                 </table>
+                                         
 
-                                    }
+                                     }
         }
+        @{ if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+            {
+
+                <p class="text-white font-weight-bold">Toplam Fiyat: @fiyat TL</p>
+            }
+            else
+            {
+                 <p  class="text-white font-weight-bold">Total: @fiyat $</p>
+            }
+                            }
         
+        @{ 
+            if (urunSayisi != 0)
+            {if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+            {
+
+                <form asp-action="SiparisVer" method="post">
+                    <input type="submit" class="btn btn-primary" value="Siparis Ver" />
+                </form>
+            }
+            else
+            {
+                 <form asp-action="SiparisVer" method="post">
+                    <input type="submit" class="btn btn-primary" value="Order" />
+                 </form>
+                }
+
+            }
+            else {
+                if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+                {
+                            ViewData["Title"] = "Sepet";
+                             <h2 class="text-black-50 text-center text-white">Sepetiniz Boş</h2>}
+                else
+                {
+                             ViewData["Title"] = "My Cart";
+                             <h2 class="text-black-50 text-center text-white">Your Cart Is Empty</h2>}
+                            
             
-        <form asp-action="SiparisVer" method="post">
-            <input type="submit" class="btn btn-primary" value="Siparis Ver" />
-        </form>
+            }
+
+        }   
+        
                 
             
     </header>

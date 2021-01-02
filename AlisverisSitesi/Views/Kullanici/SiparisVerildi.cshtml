@@ -1,7 +1,55 @@
-﻿<head>
+﻿@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@{
+    @using Microsoft.AspNetCore.Http
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+    <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
+    @using Microsoft.AspNetCore.Builder
+    @using Microsoft.AspNetCore.Localization
+    @using Microsoft.Extensions.Options
+    @using Microsoft.AspNetCore.Mvc.Localization
+
+}
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+}
+@{
+    var kullaniciVar = Context.Session.GetInt32("kullaniciVar");
+}
+@{
+    string culture = "", uiculture = "";
+    if (Context.Request.QueryString.HasValue)
+    {
+        string url = Context.Request.QueryString.Value;
+        culture = Context.Request.Query["culture"];
+        uiculture = Context.Request.Query["ui-culture"];
+    }
+}
+<head>
     <link rel="stylesheet" href="~/lib/bootstrap/downloaded/css/styles.css" />
 </head>
 
 <body>
-    <h1>Siparis Gonderildi</h1>
+    <header class="masthead">
+        @{ if (@requestCulture.RequestCulture.UICulture.Name == "tr")
+                                        {
+                ViewData["Title"] = "SiparisTamamalandı";
+                <h1 style="color:burlywood" class="text-uppercase font-weight-bold text-center">
+
+                    Siparis Gonderildi
+                </h1> }
+            else
+            {
+                ViewData["Title"] = "OrderComplete";
+                <h1 style="color:burlywood" class="text-uppercase font-weight-bold text-center">
+                   
+                    Order Sent
+                </h1> }
+             }
+    </header>
 </body>
